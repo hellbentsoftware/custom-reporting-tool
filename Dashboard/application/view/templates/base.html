@@ -1,0 +1,30 @@
+<!-- application/view/templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Dashboard Application</h1>
+
+    {% if session.get('logged_in') %}
+        <p>Hello, {{ session.get('username') }}! <a href="{{ url_for('main_routes.logout') }}">Logout</a></p>
+    {% else %}
+        <p>Please <a href="{{ url_for('main_routes.login') }}">login</a> or <a href="{{ url_for('main_routes.register') }}">register</a>.</p>
+    {% endif %}
+
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
